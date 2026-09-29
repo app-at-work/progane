@@ -553,9 +553,8 @@ mark{background:#ffe9a8;padding:0 2px;border-radius:3px}
       <div class="fl w" style="grid-column:1/-1">TAG do equipamento <b>*</b><div class="cb" id="prTag" data-v=""><button type="button" class="cb-btn"><span class="txt">Selecione a TAG</span><span class="cv">▼</span></button>
         <div class="cb-pop"><div class="ms-search"><input class="cb-q" placeholder="Buscar..." autocomplete="off"></div><div class="cb-list"></div><div class="ms-foot cb-foot"></div></div></div></div>
       <label class="w">Descrição <b>*</b><input id="prDesc" maxlength="90" autocomplete="off" placeholder="Ex.: Preventiva semanal CM01"></label>
-      <div class="fl">Semana <b>*</b><div class="cb" id="prSem" data-v=""><button type="button" class="cb-btn"><span class="txt">Selecione a semana</span><span class="cv">▼</span></button>
+      <div class="fl" style="grid-column:1/-1">Semana <b>*</b><div class="cb" id="prSem" data-v=""><button type="button" class="cb-btn"><span class="txt">Selecione a semana</span><span class="cv">▼</span></button>
         <div class="cb-pop"><div class="ms-search"><input class="cb-q" placeholder="Buscar semana ou data..." autocomplete="off"></div><div class="cb-list"></div><div class="ms-foot cb-foot"></div></div></div></div>
-      <div class="fl"><span>Período</span><div class="prsem" id="prSemInfo">—</div></div>
       <div class="msg" id="prMsg"></div>
     </div>
     <div class="mdl-f"><span id="prInfo"></span><div class="sp"></div>
@@ -1970,9 +1969,10 @@ function semList(extra){
   return [...new Set(out)].sort();
 }
 function closePrg(){cbClose();$('prgModal').classList.remove('open');PR_EDIT=null}
-function semInfo(){const v=$('prSem').dataset.v, r=weekRange(v);
-  $('prSemInfo').textContent=r?`${fdate(r[0])} a ${fdate(r[1])}`:(v?'Semana inválida':'—');
-  $('prSemInfo').style.color=r||!v?'':'var(--red)'}
+function semInfo(){const el=$('prSemInfo'); if(!el)return;
+  const v=$('prSem').dataset.v, r=weekRange(v);
+  el.textContent=r?`${fdate(r[0])} a ${fdate(r[1])}`:(v?'Semana inválida':'—');
+  el.style.color=r||!v?'':'var(--red)'}
 document.addEventListener('click',e=>{if(e.target.closest('#prSem [data-cbv]'))setTimeout(semInfo,0)});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.closest&&e.target.closest('#prSem'))setTimeout(semInfo,0)},true);
 function okPrg(){
